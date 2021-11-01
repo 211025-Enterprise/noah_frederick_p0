@@ -1,43 +1,32 @@
 package com.sql;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class SQL {
 
     /**
-     * queries the DB
+     * queries the DB for all users
      * 
-     * @param query is the SQL qeury
+     * @return is a list of strings of all the users
      */
-    public void query(String query) {
+    public List<String> getUserList() throws SQLException {
 
-        Connection conn = null;
-        Statement setupStatement = null;
+        List<String> res = new ArrayList<String>();
 
-        try {
-            // connect to DB
-            conn = getRemoteConnection();
+        // try with resource block
+        try (
+                // connect to DB and create statement
+                Connection conn = getRemoteConnection();
+                Statement statement = conn.createStatement();
 
-            // create statement, execute it on DB, and close
-            setupStatement = conn.createStatement();
-            setupStatement.executeQuery(query);
-            setupStatement.close();
+                // execute query and get result
+                ResultSet rs = statement.executeQuery("SELECT username FROM \"User\";");) {
 
-        } catch (SQLException e) {
-
-            // returned SQL
-            System.out.println("SQLException: " + e.getMessage());
-
-        } finally {
-
-            // close connection to DB
-            System.out.println("Closing the connection.");
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignore) {
-                }
-            }
+            while (rs.next())
+                res.add(rs.getString(1));
+            return res;
         }
     }
 
@@ -78,6 +67,7 @@ public final class SQL {
                 System.out.println("SQL Error: " + e.toString());
             }
         }
+        // return null if no connection was made
         return null;
     }
 
