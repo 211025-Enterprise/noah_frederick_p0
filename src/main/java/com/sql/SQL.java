@@ -5,8 +5,9 @@ import java.sql.*;
 public final class SQL {
 
     /**
+     * queries the DB
      * 
-     * @param query
+     * @param query is the SQL qeury
      */
     public void query(String query) {
 
