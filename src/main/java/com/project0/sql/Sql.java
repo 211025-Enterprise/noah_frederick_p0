@@ -2,8 +2,6 @@ package com.project0.sql;
 
 import java.sql.*;
 
-public class Sql {
-
     /**
      * Creates a connection to the DB
      * 
