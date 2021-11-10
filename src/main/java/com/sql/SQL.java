@@ -2,6 +2,7 @@ package com.sql;
 
 import java.sql.*;
 
+<<<<<<< Updated upstream:src/main/java/com/sql/SQL.java
 public final class SQL {
     
     /**
@@ -41,6 +42,9 @@ public final class SQL {
         }
     }
 
+=======
+public class Sql {
+>>>>>>> Stashed changes:src/main/java/com/project0/sql/Sql.java
     /**
      * Creates a connection to the DB
      * 
