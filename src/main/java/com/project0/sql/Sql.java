@@ -1,52 +1,13 @@
-package com.sql;
+package com.project0.sql;
 
 import java.sql.*;
-
-public final class SQL {
-    
-    /**
-     * queries the DB
-     * 
-     * @param query is the SQL qeury
-     */
-    public void query(String query) {
-
-        Connection conn = null;
-        Statement setupStatement = null;
-
-        try {
-            // connect to DB
-            conn = getRemoteConnection();
-
-            // create statement, execute it on DB, and close
-            setupStatement = conn.createStatement();
-            setupStatement.executeQuery(query);
-            setupStatement.close();
-
-        } catch (SQLException e) {
-
-            // returned SQL
-            System.out.println("SQLException: " + e.getMessage());
-
-        } finally {
-
-            // close connection to DB
-            System.out.println("Closing the connection.");
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignore) {
-                }
-            }
-        }
-    }
 
     /**
      * Creates a connection to the DB
      * 
      * @return Connection to DB
      */
-    private Connection getRemoteConnection() {
+    public static Connection getConnection() {
 
         // if DB env are setup then create connection
         if (System.getenv("RDS_HOSTNAME") != null) {
@@ -64,10 +25,8 @@ public final class SQL {
                         + "&password=" + password;
 
                 // attempt to connect to DB
-                System.out.println("Getting remote connection with connection string from environment variables.");
-                Connection conn = DriverManager.getConnection(jdbcUrl);
-                System.out.println("Remote connection successful.");
-                return conn;
+                return DriverManager.getConnection(jdbcUrl);
+
             } catch (ClassNotFoundException e) {
 
                 // postgres driver not found
@@ -77,7 +36,11 @@ public final class SQL {
                 // error connecting to DB
                 System.out.println("SQL Error: " + e.toString());
             }
+        } else {
+            System.out.println("ENV variables not found.");
+
         }
+        // return null if no connection was made
         return null;
     }
 
