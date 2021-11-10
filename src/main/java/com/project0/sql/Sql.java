@@ -1,41 +1,15 @@
-package com.sql;
+package com.project0.sql;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public final class SQL {
-
-    /**
-     * queries the DB for all users
-     * 
-     * @return is a list of strings of all the users
-     */
-    public List<String> getUserList() throws SQLException {
-
-        List<String> res = new ArrayList<String>();
-
-        // try with resource block
-        try (
-                // connect to DB and create statement
-                Connection conn = getRemoteConnection();
-                Statement statement = conn.createStatement();
-
-                // execute query and get result
-                ResultSet rs = statement.executeQuery("SELECT username FROM \"User\";");) {
-
-            while (rs.next())
-                res.add(rs.getString(1));
-            return res;
-        }
-    }
+public class Sql {
 
     /**
      * Creates a connection to the DB
      * 
      * @return Connection to DB
      */
-    private Connection getRemoteConnection() {
+    public static Connection getConnection() {
 
         // if DB env are setup then create connection
         if (System.getenv("RDS_HOSTNAME") != null) {
@@ -53,10 +27,8 @@ public final class SQL {
                         + "&password=" + password;
 
                 // attempt to connect to DB
-                System.out.println("Getting remote connection with connection string from environment variables.");
-                Connection conn = DriverManager.getConnection(jdbcUrl);
-                System.out.println("Remote connection successful.");
-                return conn;
+                return DriverManager.getConnection(jdbcUrl);
+
             } catch (ClassNotFoundException e) {
 
                 // postgres driver not found
@@ -66,6 +38,9 @@ public final class SQL {
                 // error connecting to DB
                 System.out.println("SQL Error: " + e.toString());
             }
+        } else {
+            System.out.println("ENV variables not found.");
+
         }
         // return null if no connection was made
         return null;
