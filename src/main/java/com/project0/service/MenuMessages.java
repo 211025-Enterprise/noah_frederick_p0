@@ -79,12 +79,6 @@ public class MenuMessages {
 
     }
 
-    // Message for sending money
-    public void sendMoneyMessage() {
-        System.out.println("Which account do you want to send money from?");
-
-    }
-
     // Message when transferring money between accounts
     public void transferMoneyMessage() {
         System.out.println("Which account do you want to transfer your money to?");

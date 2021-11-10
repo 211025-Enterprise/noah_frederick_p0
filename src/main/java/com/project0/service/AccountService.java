@@ -81,7 +81,7 @@ public class AccountService {
         VanquishList<AccountList> accountList = accountListDao.getByAccountId(accountId);
 
         System.out.println("Name: " + account.getName() + "\nType: " + getAccountTypeName(account.getType())
-                + "\nAccount Number: " + accountId + "\nBalance: " + account.getBalance() + "\nShared with:");
+                + "\nAccount Number: " + accountId + "\nBalance: $" + account.getBalance() + "\nShared with:");
 
         for (int i = 0; i < accountList.getSize(); i++) {
             User user = userDao.getById(accountList.get(i).getUserId());
@@ -94,7 +94,7 @@ public class AccountService {
             Transaction transaction = transactions.get(i);
             System.out.println("Id: " + transaction.getId() + " Type: " + getTransactionTypeName(transaction.getType())
                     + " Amount: "
-                    + (transaction.getType() > 1 ? "+$" + transaction.getAmount() : "-$" + transaction.getAmount()));
+                    + (transaction.getType() > 1 ? "-$" + transaction.getAmount() : "+$" + transaction.getAmount()));
         }
         System.out.println("\n\n");
     }

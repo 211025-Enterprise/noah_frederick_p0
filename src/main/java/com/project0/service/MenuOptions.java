@@ -117,7 +117,7 @@ public class MenuOptions {
             accountService.depositMoney(accountId);
             break;
         case 3:
-            menuMessages.sendMoneyMessage();
+
             accountService.sendMoney(accountId);
             break;
         case 4:
